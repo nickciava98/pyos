@@ -4,7 +4,7 @@ import time
 import os
 
 root = Tk()
-frame = Frame(root)
+root.attributes("-fullscreen", True)
 ctrlTestDir = StringVar()
 
 def info():
@@ -37,10 +37,13 @@ def info():
     info.mainloop()
 
 def restart(root):
-    root.quit()
     root.destroy()
+    root.quit()
+
+    root = Tk()
+    root.attributes("-fullscreen", True)   
     
-    main()
+    main(root)
 
 def refresh(frame, root):
     frame.destroy()
@@ -67,15 +70,14 @@ def fm():
      
     id2 = tree.insert("", 1, "dir2", text="Dir 2")
     tree.insert(id2, "end", "dir 2", text="sub dir 2", values=("2A","2B"))
-     
-    ##alternatively:
     tree.insert("", 3, "dir3", text="Dir 3")
     tree.insert("dir3", 3, text=" sub dir 3",values=("3A"," 3B"))
      
     tree.pack()
     tr.mainloop()
 
-def main():
+def main(root):
+    frame = Frame(root)
     root.resizable(False, False)
     root.title("PyOS")
     root.geometry("800x600")
@@ -105,7 +107,7 @@ def main():
     mEx = Menu(mStart, tearoff = 0)
     mEx.config(font = ("Tahome", 15))
     mStart.add_cascade(label = "Esci", menu = mEx)
-    mEx.add_command(label = "Chiudi", command = root.quit)
+    mEx.add_command(label = "Chiudi", command = root.destroy)
     mEx.add_command(label = "Riavvia", command = lambda: restart(root))
 
     mHelp = Menu(menu1, tearoff = 0)
@@ -144,4 +146,4 @@ def main():
 
     root.mainloop()
 
-main()
+main(root)
