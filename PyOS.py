@@ -1,11 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 import time
-import datetime
 import os
 
 root = Tk()
 root.attributes("-fullscreen", True)
+root["background"] = "#FFFF99"
 ctrlTestDir = StringVar()
 
 def info():
@@ -13,9 +13,9 @@ def info():
     info["background"] = "#FFFF99"
     info.resizable(False, False)
     info.title("Info")
-    info.geometry("250x150")
+    info.geometry("280x150")
 
-    l = Label(info, text = "PyOS 0.1 Alpha", font = ("Tahoma", 20))
+    l = Label(info, text = "PyOS 0.2 Alpha", font = ("Tahoma", 20))
     l["background"] = "#FFFF99"
     l.pack(side = "top")    
 
@@ -37,20 +37,23 @@ def info():
     
     info.mainloop()
 
+def shutdown(root):
+    root.destroy()
+    root.quit()
+
+    os.system("sudo poweroff")
+
 def restart(root):
     root.destroy()
     root.quit()
 
-    root = Tk()
-    root.attributes("-fullscreen", True)   
-    
-    main(root)
+    os.system("sudo reboot")
 
 def refresh(l_time):
-
-    l_time.config(text =time.strftime("%H:%M") ,font = ("Tahoma", 50))
+    l_time.config(text = time.strftime("%H:%M"), font = ("Tahoma", 50))
     l_time.pack()
-    root.after(1000,refresh,l_time)
+
+    root.after(1000, refresh, l_time)
 
 def fm():
     tr = Toplevel()
@@ -76,10 +79,10 @@ def fm():
 
 def main(root):
     frame = Frame(root)
-    root.resizable(False, False)
+    #root.resizable(False, False)
     root.title("PyOS")
-    root.geometry("800x600")
-    root["background"] = "#FFFF99"
+    #root.geometry("800x600")
+    frame["background"] = "#FFFF99"
 
     menu1 = Menu(root)
 
@@ -90,12 +93,12 @@ def main(root):
     mApp = Menu(mStart, tearoff = 0)
     mApp.config(font = ("Tahoma", 15))
     mStart.add_cascade(label="Applicazioni", menu = mApp)
-    mApp.add_command(label = "Nessuna App installata")
+    mApp.add_command(label = "IDLE (Python 3.4)", command = lambda: os.system("sudo idle-python3.4"))
 
     mStr = Menu(mStart, tearoff = 0)
     mStr.config(font = ("Tahoma", 15))
     mStart.add_cascade(label="Strumenti", menu = mStr)
-    mStr.add_command(label = "Nessuno Strumento installato")
+    mStr.add_command(label = "Terminale", command = lambda: os.system("lxterminal"))
 
     mGam = Menu(mStart, tearoff = 0)
     mGam.config(font = ("Tahoma", 15))
@@ -105,7 +108,7 @@ def main(root):
     mEx = Menu(mStart, tearoff = 0)
     mEx.config(font = ("Tahome", 15))
     mStart.add_cascade(label = "Esci", menu = mEx)
-    mEx.add_command(label = "Chiudi", command = root.destroy)
+    mEx.add_command(label = "Spegni", command = lambda: shutdown(root))
     mEx.add_command(label = "Riavvia", command = lambda: restart(root))
 
     mHelp = Menu(menu1, tearoff = 0)
@@ -120,7 +123,37 @@ def main(root):
     l_time["background"] = "#FFFF99"
     l_time.pack()
 
-    img = PhotoImage(file = "file_manager.png")
+    day = time.strftime("%A")
+
+    if(day == "Monday"):
+        day = "Lunedì"
+
+    if(day == "Tuesday"):
+        day = "Martedì"
+
+    if(day == "Wednesday"):
+        day = "Mercoledì"
+
+    if(day == "Thursday"):
+        day = "Giovedì"
+
+    if(day == "Friday"):
+        day = "Venerdì"
+
+    if(day == "Saturday"):
+        day = "Sabato"
+
+    if(day == "Sunday"):
+        day = "Domenica"
+        
+    l = Label(frame, text = day + " " + time.strftime("%d/%m/%Y"))
+    l.config(font = ("Tahoma", 30))
+    l["background"] = "#FFFF99"
+    l.pack(side = "top")
+
+    #frame.after(1000, refresh, frame, root)
+
+    img = PhotoImage(file = "/home/pyos/pyos-master/file_manager.png")
     file_manager = Button(root, image = img, command = fm)
     file_manager.configure(width = 50, height = 50)
     file_manager.place(x = 20, y = 150)
@@ -135,8 +168,8 @@ def main(root):
     l["background"] = "#FFFF99"
     l.place(x = 600, y = 490)
 
-    img2 = PhotoImage(file = "agplv3.png")
-    agpl = Button(root, image = img2, command = lambda: os.system("notepad agplv3.txt"))
+    img2 = PhotoImage(file = "/home/pyos/pyos-master/agplv3.png")
+    agpl = Button(root, image = img2, command = lambda: os.system("sudo gedit /home/pyos/pyos-master/agplv3.txt"))
     agpl.configure(width = 88, height = 31)
     agpl.place(x = 620, y = 540)
     
