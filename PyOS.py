@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import time
+import datetime
 import os
 
 root = Tk()
@@ -45,14 +46,11 @@ def restart(root):
     
     main(root)
 
-def refresh(frame, root):
-    frame.destroy()
-    frame = Frame(root)
-    frame.pack()
+def refresh(l_time):
 
-    l = Label(frame, text = time.strftime("%H:%S"))
-    l.config(font = ("Tahoma", 50))
-    l.pack()
+    l_time.config(text =time.strftime("%H:%M") ,font = ("Tahoma", 50))
+    l_time.pack()
+    root.after(1000,refresh,l_time)
 
 def fm():
     tr = Toplevel()
@@ -117,10 +115,10 @@ def main(root):
     
     frame.pack()
 
-    l = Label(frame, text = time.strftime("%H:%M"))
-    l.config(font = ("Tahoma", 50))
-    l["background"] = "#FFFF99"
-    l.pack()
+    l_time= Label(frame, text = time.strftime("%H:%M"))
+    l_time.config(font = ("Tahoma", 50))
+    l_time["background"] = "#FFFF99"
+    l_time.pack()
 
     img = PhotoImage(file = "file_manager.png")
     file_manager = Button(root, image = img, command = fm)
@@ -143,7 +141,7 @@ def main(root):
     agpl.place(x = 620, y = 540)
     
     root.config(menu=menu1)
-
+    refresh(l_time)
     root.mainloop()
 
 main(root)
