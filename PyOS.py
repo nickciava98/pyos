@@ -134,7 +134,7 @@ def main(root, frame, color):
     mTema = Menu(mFile, tearoff = 0)
     mTema.config(font = ("Tahoma", 15))
     mFile.add_cascade(label = "Cambia Tema", menu = mTema)
-    mTema.add_command(label = "Predefinito (PyOS)", command = lambda: theme("#FFFF99"))
+    mTema.add_command(label = "Predefinito (PyOS)", command = lambda: theme("#FFFF99", root, frame))
     mTema.add_command(label = "Blu", command = lambda: theme("#87CEFA", root, frame))
     mTema.add_command(label = "Verde", command = lambda: theme("#98FB98", root, frame))
     mTema.add_command(label = "Argento", command = lambda: theme("#DCDCDC", root, frame))
@@ -181,7 +181,7 @@ def main(root, frame, color):
 
     #frame.after(1000, refresh, frame, root)
 
-    img = PhotoImage(file = "file_manager.png")
+    img = PhotoImage(file = "/home/pyos/pyos-master/file_manager.png")
     file_manager = Button(root, image = img, command = fm)
     file_manager.configure(width = 50, height = 50)
     file_manager.place(x = 20, y = 150)
@@ -196,7 +196,7 @@ def main(root, frame, color):
     l["background"] = color
     l.place(x = 600, y = 490)
 
-    img2 = PhotoImage(file = "agplv3.png")
+    img2 = PhotoImage(file = "/home/pyos/pyos-master/agplv3.png")
     agpl = Button(root, image = img2, command = lambda: os.system("sudo gedit /home/pyos/pyos-master/agplv3.txt"))
     agpl.configure(width = 88, height = 31)
     agpl.place(x = 620, y = 540)
