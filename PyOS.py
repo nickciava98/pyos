@@ -25,6 +25,52 @@ root.title("PyOS")
 frame["background"] = color
 ctrlTestDir = StringVar()
 cl = StringVar()
+root.withdraw()
+
+def init(start, root, frame, color, color_fg):
+    root.deiconify()
+
+    start.quit()
+    start.destroy()
+
+    main(root, frame, color, color_fg)
+
+def start():
+    start = Tk()
+    start.geometry("300x150")
+    start["background"] = "black"
+    start.resizable(False, False)
+    start.title("Avvio di PyOS")
+    left = (start.winfo_screenwidth() - 300) / 2
+    top = (start.winfo_screenheight() - 150) // 2
+    geometry = "%dx%d+%d+%s" % (300, 150, left, top)
+    start.geometry(geometry)
+
+    l = Label(start, text = "Python OS 1.0", font = ("Tahoma", 20), fg = "white")
+    l["background"] = "black"
+    l.pack()
+
+    l = Label(start, text = "")
+    l["background"] = "black"
+    l.pack()
+
+    l = Label(start, text = "Benvenuto in Python OS 1.0", font = ("Tahoma", 15), fg = "white")
+    l["background"] = "black"
+    l.pack()
+
+    l = Label(start, text = "")
+    l["background"] = "black"
+    l.pack()
+
+    l = Label(start, text = "Copyright (c) 2016 Niccolò Ciavarella.", font = ("Tahoma", 10), fg = "white")
+    l["background"] = "black"
+    l.pack()
+    l = Label(start, text = "Tutti i diritti riservati.", font = ("Tahoma", 10), fg = "white")
+    l["background"] = "black"
+    l.pack()
+    
+    start.after(5000, init, start, root, frame, color, color_fg)
+    start.mainloop()
 
 def info(color, color_fg):
     info = Toplevel()
@@ -287,15 +333,18 @@ def main(root, frame, color, color_fg):
     l = Label(root, text = "Python OS", fg = color_fg)
     l.config(font = ("Tahoma", 20))
     l["background"] = color
-    l.place(x = 600, y = 490)
+    #l.place(y = 490)
+    l.pack(side = "bottom")
 
     img2 = PhotoImage(file = "/home/pyos/pyos-master/agplv3.png")
     agpl = Button(root, image = img2)
     agpl.configure(width = 88, height = 31)
-    agpl.place(x = 620, y = 540)
+    #agpl.place(x = 620, y = 540)
+    agpl.pack(side = "bottom")
     
     root.config(menu=menu1)
     refresh(l_time, color_fg)
     root.mainloop()
 
-main(root, frame, color, color_fg)
+start()
+#main(root, frame, color, color_fg)
